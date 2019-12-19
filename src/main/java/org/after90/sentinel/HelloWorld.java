@@ -9,18 +9,22 @@ import com.alibaba.csp.sentinel.slots.block.flow.FlowRuleManager;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
 /**
  * @author zhaogj
  */
 @Slf4j
+@Service
 public class HelloWorld {
 
-  public static void main(String[] args) {
+
+  public void testFlowRules() {
     // 配置规则.
     initFlowRules();
-
-    while (true) {
+    int i = 0;
+    while (i < 100) {
+      i++;
       // 1.5.0 版本开始可以直接利用 try-with-resources 特性，自动 exit entry
       try (Entry entry = SphU.entry("HelloWorld")) {
         // 被保护的逻辑
@@ -36,10 +40,9 @@ public class HelloWorld {
       }
 
     }
-
   }
 
-  private static void initFlowRules() {
+  private void initFlowRules() {
     List<FlowRule> rules = new ArrayList<>();
     FlowRule rule = new FlowRule();
     rule.setResource("HelloWorld");
