@@ -57,6 +57,7 @@
       <artifactId>sentinel-core</artifactId>
       <version>1.7.0</version>
     </dependency>
+    <!-- http代理 -->
     <dependency>
       <groupId>org.mitre.dsmiley.httpproxy</groupId>
       <artifactId>smiley-http-proxy-servlet</artifactId>
