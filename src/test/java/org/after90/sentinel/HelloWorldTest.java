@@ -2,6 +2,7 @@ package org.after90.sentinel;
 
 
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,11 +16,11 @@ public class HelloWorldTest {
   @Autowired
   private HelloWorld helloWorld;
 
-  @org.junit.Test
+  @Test
   public void main() {
   }
 
-  @org.junit.Test
+  @Test
   public void testFlowRules() {
     helloWorld.testFlowRules();
   }
