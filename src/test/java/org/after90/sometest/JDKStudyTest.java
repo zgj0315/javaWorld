@@ -1,7 +1,6 @@
-package org.after90.sentinel;
+package org.after90.sometest;
 
-
-import lombok.extern.slf4j.Slf4j;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,18 +10,23 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@Slf4j
-public class HelloWorldTest {
+public class JDKStudyTest {
 
   @Autowired
-  private HelloWorld helloWorld;
+  private JDKStudy jdkStudy;
 
   @Test
-  public void main() {
+  public void mapStudy() {
+    jdkStudy.mapStudy();
   }
 
   @Test
-  public void testFlowRules() {
-    helloWorld.testFlowRules();
+  public void arrayListStudy() {
+    jdkStudy.arrayListStudy();
+  }
+
+  @Test
+  public void intStudy() {
+    jdkStudy.intStudy();
   }
 }
