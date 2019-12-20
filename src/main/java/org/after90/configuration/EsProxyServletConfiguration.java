@@ -11,21 +11,20 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @Slf4j
-public class KibanaProxyServletConfiguration {
+public class EsProxyServletConfiguration {
 
-  private String servletUrl = "/kibana/*";
-  private String targetUrl = "http://172.16.43.17:15601";
+  private String servletUrl = "/es/*";
+  private String targetUrl = "http://172.16.43.17:9200";
 
-  @Bean()
-  public ServletRegistrationBean servletRegistrationBean() {
+  @Bean
+  public ServletRegistrationBean esServletRegistrationBean() {
     ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean(
         new ProxyServlet(), servletUrl);
     servletRegistrationBean
         .addInitParameter("targetUri", targetUrl);
     servletRegistrationBean.addInitParameter(ProxyServlet.P_LOG,
         "true");
-    log.info("KinabaServletRegistrationBean set is ok.");
+    log.info("EsServletRegistrationBean set is ok.");
     return servletRegistrationBean;
   }
-
 }
