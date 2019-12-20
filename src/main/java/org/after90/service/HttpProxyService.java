@@ -11,6 +11,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 /**
@@ -20,12 +21,15 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class HttpProxyService {
 
+  @Value("${es.url}")
+  private String esUrl;
+
   public void doGet(HttpServletRequest servletRequest,
       HttpServletResponse servletResponse) {
 
     CloseableHttpClient httpclient = HttpClients.createDefault();
     HttpGet httpGet = new HttpGet(
-        "http://172.16.43.17:9200/" + servletRequest.getRequestURI().substring(4));
+        esUrl + "/" + servletRequest.getRequestURI().substring(4));
     CloseableHttpResponse proxyResponse = null;
     try {
       proxyResponse = httpclient.execute(httpGet);
