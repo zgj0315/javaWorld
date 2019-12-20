@@ -20,8 +20,13 @@ public class EsController {
   private HttpProxyService httpProxyService;
 
 
-  @RequestMapping(value = "/es/**", method = RequestMethod.GET)
+  @RequestMapping(value = "/es/**", method = {RequestMethod.GET, RequestMethod.POST})
   public void es(HttpServletRequest request, HttpServletResponse response) {
-    httpProxyService.doGet(request, response);
+    log.info("method:{}", request.getMethod());
+    if ("GET".equals(request.getMethod())) {
+      httpProxyService.doGet(request, response);
+    } else if ("POST".equals(request.getMethod())) {
+      httpProxyService.doPost(request, response);
+    }
   }
 }
