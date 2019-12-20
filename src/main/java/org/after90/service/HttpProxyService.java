@@ -1,5 +1,11 @@
 package org.after90.service;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -7,32 +13,39 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.springframework.stereotype.Service;
 
+/**
+ * @author zhaogj
+ */
 @Service
+@Slf4j
 public class HttpProxyService {
 
-  public void doGet() throws Exception {
-    // 创建Httpclient对象
+  public void doGet(HttpServletRequest servletRequest,
+      HttpServletResponse servletResponse) {
+
     CloseableHttpClient httpclient = HttpClients.createDefault();
-    // 创建http GET请求
-    HttpGet httpGet = new HttpGet("http://www.baidu.com");
-    CloseableHttpResponse response = null;
+    HttpGet httpGet = new HttpGet(
+        "http://172.16.43.17:9200/" + servletRequest.getRequestURI().substring(4));
+    CloseableHttpResponse proxyResponse = null;
     try {
-      // 执行请求
-      response = httpclient.execute(httpGet);
-      // 判断返回状态是否为200
-      if (response.getStatusLine().getStatusCode() == 200) {
-        //请求体内容
-        String content = EntityUtils.toString(response.getEntity(), "UTF-8");
-        //内容写入文件
-        //        FileUtils.writeStringToFile(new File("E:\\devtest\\baidu.html"), content, "UTF-8");
-        System.out.println("内容长度：" + content.length());
+      proxyResponse = httpclient.execute(httpGet);
+      // set status
+      servletResponse.setStatus(proxyResponse.getStatusLine().getStatusCode());
+      // set entity
+      HttpEntity entity = proxyResponse.getEntity();
+      if (entity != null) {
+        OutputStream servletOutputStream = servletResponse.getOutputStream();
+        entity.writeTo(servletOutputStream);
       }
+      EntityUtils.consume(entity);
+    } catch (Exception e) {
+      log.error("do get err", e);
     } finally {
-      if (response != null) {
-        response.close();
+      try {
+        proxyResponse.close();
+      } catch (IOException e) {
+        log.error("response.close err", e);
       }
-      //相当于关闭浏览器
-      httpclient.close();
     }
   }
 
