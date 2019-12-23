@@ -16,9 +16,10 @@ public class MessageController {
 
   @RequestMapping("/message")
   public String message() {
-    //    log.info("start message");
-    asyncService.executeAsync();
-    //    log.info("end message");
+    long lTime = System.currentTimeMillis();
+    log.info("start message, time:{}", lTime);
+    asyncService.executeAsync(lTime);
+    log.info("end message, time:{}", lTime);
     return "success";
   }
 }

@@ -28,18 +28,21 @@ public class ExecutorConfiguration {
     ThreadPoolTaskExecutor executor = new VisiableThreadPoolTaskExecutor();
     //配置核心线程数
     executor.setCorePoolSize(3);
+    //
+    executor.setKeepAliveSeconds(10);
     //配置最大线程数
-    executor.setMaxPoolSize(10);
+    executor.setMaxPoolSize(20);
     //配置队列大小
-    executor.setQueueCapacity(50);
+    executor.setQueueCapacity(5);
     //配置线程池中的线程的名称前缀
     executor.setThreadNamePrefix("async-service-");
 
     // rejection-policy：当pool已经达到max size的时候，如何处理新任务
     // CALLER_RUNS：不在新线程中执行任务，而是有调用者所在的线程来执行
-//    executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
-//    executor.setRejectedExecutionHandler(new ThreadPoolExecutor.AbortPolicy());
-//    executor.setRejectedExecutionHandler(new ThreadPoolExecutor.DiscardPolicy());
+    //    executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
+    //    executor.setRejectedExecutionHandler(new ThreadPoolExecutor.AbortPolicy());
+    //    executor.setRejectedExecutionHandler(new ThreadPoolExecutor.DiscardPolicy());
+    // 队列满了的话，把老的删除，加入新的
     executor.setRejectedExecutionHandler(new ThreadPoolExecutor.DiscardOldestPolicy());
 
     //执行初始化
