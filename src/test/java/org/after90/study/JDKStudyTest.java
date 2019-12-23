@@ -1,6 +1,4 @@
-package org.after90.sometest;
-
-import static org.junit.Assert.*;
+package org.after90.study;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

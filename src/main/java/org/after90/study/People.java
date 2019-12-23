@@ -1,4 +1,4 @@
-package org.after90.sometest;
+package org.after90.study;
 
 import java.io.Serializable;
 
