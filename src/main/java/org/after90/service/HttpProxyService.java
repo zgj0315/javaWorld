@@ -57,6 +57,11 @@ public class HttpProxyService {
       } catch (IOException e) {
         log.error("response.close err", e);
       }
+      try {
+        httpclient.close();
+      } catch (IOException e) {
+        log.error("httpclient.close err", e);
+      }
     }
   }
 
@@ -87,6 +92,11 @@ public class HttpProxyService {
         proxyResponse.close();
       } catch (IOException e) {
         log.error("response.close err", e);
+      }
+      try {
+        httpclient.close();
+      } catch (IOException e) {
+        log.error("httpclient.close err", e);
       }
     }
   }
