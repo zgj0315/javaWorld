@@ -20,7 +20,7 @@ public class PostConstructStudy {
   @PostConstruct
   public void doSomething() {
     log.info("start do something.");
-    jdkStudy.mapStudy();
+//    jdkStudy.mapStudy();
   }
 
 
